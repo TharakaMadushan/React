@@ -6,17 +6,6 @@ import Modal from "./Modal";
 import MainHeader from "./MainHeader";
 
 function PostsList({ isPosting, onStopPosting }) {
-  const [enteredBody, setEnteredBody] = useState("");
-  const [enteredAuthor, setEnteredAuthor] = useState("");
-
-  function bodyChangeHandler(event) {
-    setEnteredBody(event.target.value);
-  }
-
-  function authorChangeHandler(event) {
-    setEnteredAuthor(event.target.value);
-  }
-
   // let modalContent;
 
   // if (modalIsVisible) {
@@ -29,21 +18,25 @@ function PostsList({ isPosting, onStopPosting }) {
   //     </Modal>
   //   );
   // }
+  const [posts, setPosts] = useState([]);
 
+  function addPostHandler(postData) {
+    setPosts((existingPost) => [postData, ...existingPost]);
+  }
   return (
     <>
       {isPosting && (
         <Modal onClose={onStopPosting}>
           <NewPost
-            onBodyChange={bodyChangeHandler}
-            onAuthorChange={authorChangeHandler}
+            // onBodyChange={bodyChangeHandler}
+            // onAuthorChange={authorChangeHandler}
             onCancel={onStopPosting}
+            onAddPost={addPostHandler}
           />
         </Modal>
       )}
 
       <ul className={classes.posts}>
-        <Post author={enteredAuthor} body={enteredBody} />
         <Post author="Janindu Nimeshaka" body="Check out the full course!" />
       </ul>
     </>
